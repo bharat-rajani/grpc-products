@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package products.v1;
+
+service ProductService {
+    rpc GetVendorProductTypes(ClientRequestType) returns (ClientResponseType);
+    rpc GetVendorProducts(ClientRequestProducts) returns (stream ClientResponseProducts);
+    rpc SetVendorProducts(stream AdminClientRequestProducts) returns (ProductCount);
+    rpc ChatVendorSales(stream ChatMessage) returns (stream ChatMessage);
+}
+
+message ClientRequestType {
+    string vendor = 1;
+}
+
+message ClientResponseType {
+    string productType = 1;
+}
+
+message ClientRequestProducts {
+    string vendor = 1;
+    string productType = 2;
+}
+
+message ClientResponseProducts {
+    ProdsPrep product = 1;
+}
+
+message ProdsPrep {
+    string title = 1;
+    string url = 2;
+    string shortUrl = 3;
+}
+
+message AdminClientRequestProducts{
+    ProdsPrep product = 1;
+    string vendor = 2;
+    string productType = 3;
+}
+
+message ProductCount{
+    int32 count = 1;
+}
+
+message ChatMessage{
+    string messageContent = 1;
+}
